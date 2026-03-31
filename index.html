@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classical Tastes — Comparativo 2025 vs 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0c;color:#ededef;font-family:system-ui,sans-serif}
+.wrap{padding:20px 16px;background:#0a0a0c;min-height:100vh}
+.header{margin-bottom:20px}
+.header h1{font-size:17px;font-weight:500;color:#ededef}
+.header p{font-size:11px;color:#8a8f98;margin-top:3px}
+.tabs{display:flex;gap:6px;margin-bottom:16px}
+.tab{font-size:11px;padding:5px 12px;border-radius:20px;border:0.5px solid rgba(255,255,255,0.1);background:transparent;color:#8a8f98;cursor:pointer}
+.tab.active{background:rgba(94,106,210,0.2);border-color:rgba(94,106,210,0.5);color:#8b98f0}
+.panel{display:none}
+.panel.active{display:block}
+.krow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.kcard{background:#141416;border:0.5px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px}
+.klabel{font-size:10px;color:#8a8f98;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px}
+.kvals{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kv25{font-size:13px;font-weight:500;color:#8a8f98}
+.kv26{font-size:18px;font-weight:500;color:#ededef}
+.kdiff{font-size:10px;padding:2px 6px;border-radius:10px;margin-left:2px}
+.up{background:rgba(74,222,128,0.12);color:#4ade80}
+.down{background:rgba(248,113,113,0.12);color:#f87171}
+.sec{background:#141416;border:0.5px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;margin-bottom:12px}
+.sec-title{font-size:10px;color:#8a8f98;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;font-weight:500}
+.bc-row{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.bc-label{font-size:11px;color:#ededef;width:130px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc-bars{flex:1;display:flex;flex-direction:column;gap:3px}
+.bc-bar{height:8px;border-radius:2px;min-width:2px}
+.bc-v25{background:#5a6070}
+.bc-v26{background:#5e6ad2}
+.bc-num{font-size:10px;color:#8a8f98;width:58px;text-align:right;flex-shrink:0}
+.funnel{display:flex;gap:6px;margin-top:4px}
+.fstep{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.fbar-wrap{width:100%;display:flex;flex-direction:column;gap:2px;align-items:center}
+.fbar{width:100%;border-radius:3px}
+.f25{background:#5a6070}
+.f26{background:#5e6ad2}
+.flabel{font-size:9px;color:#8a8f98;text-align:center}
+.fval{font-size:9px;text-align:center}
+.ad-row{padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.04);display:flex;flex-direction:column;gap:4px}
+.ad-row:last-child{border:none}
+.ad-name{font-size:11px;color:#ededef;line-height:1.3}
+.ad-metrics{display:flex;gap:10px;flex-wrap:wrap}
+.am{font-size:10px;color:#8a8f98}
+.am span{color:#ededef}
+.badge-y{font-size:9px;padding:1px 6px;border-radius:8px;color:#8a8f98;background:rgba(138,143,152,0.12);margin-left:4px}
+.badge-26{color:#8b98f0;background:rgba(94,106,210,0.12)}
+.legend{display:flex;gap:14px;margin-bottom:10px}
+.leg{display:flex;align-items:center;gap:5px;font-size:10px;color:#8a8f98}
+.dot25{width:8px;height:8px;border-radius:2px;background:#5a6070;flex-shrink:0}
+.dot26{width:8px;height:8px;border-radius:2px;background:#5e6ad2;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>Classical Tastes — Comparativo de Anúncios</h1>
+    <p>fev–abr/2025 vs fev–mar/2026 · Classical Tastes Studio</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview',this)">Visão geral</button>
+    <button class="tab" onclick="switchTab('video',this)">Vídeo & Engajamento</button>
+    <button class="tab" onclick="switchTab('ads25',this)">Anúncios 2025</button>
+    <button class="tab" onclick="switchTab('ads26',this)">Anúncios 2026</button>
+  </div>
+
+  <div class="panel active" id="panel-overview">
+    <div class="legend"><span class="leg"><span class="dot25"></span>2025</span><span class="leg"><span class="dot26"></span>2026</span></div>
+    <div class="krow" id="krow-overview"></div>
+    <div class="sec">
+      <div class="sec-title">Custo por mensagem — top anúncios com resultado</div>
+      <div id="cpm-bars"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">CPM por anúncio (R$)</div>
+      <div id="cpm-period-bars"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-video">
+    <div class="sec">
+      <div class="sec-title">Funil de retenção de vídeo (média dos anúncios)</div>
+      <div class="legend"><span class="leg"><span class="dot25"></span>2025</span><span class="leg"><span class="dot26"></span>2026</span></div>
+      <div class="funnel" id="funnel"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Thumb Stop Ratio — todos os anúncios</div>
+      <div id="tsr-bars"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title">Half-View Engagement Ratio — anúncios com dados</div>
+      <div id="hver-bars"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-ads25">
+    <div class="sec">
+      <div class="sec-title">Detalhamento por anúncio · 2025</div>
+      <div id="ads25-list"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-ads26">
+    <div class="sec">
+      <div class="sec-title">Detalhamento por anúncio · 2026</div>
+      <div id="ads26-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ads25=[
+  {name:"EverlastingArt",short:"EverlastingArt",gasto:1269.89,msgs:30,custoMsg:42.33,cpm:100.23,ctr:0.10,tsr:24.87,hver:0.97,v25:279,v50:123,v75:53,v95:27,impressoes:12670},
+  {name:"TimelessArtistry (main)",short:"TimelessArtistry",gasto:520.3,msgs:11,custoMsg:47.3,cpm:128.31,ctr:0.15,tsr:17.95,hver:0.81,v25:79,v50:33,v75:20,v95:14,impressoes:4055},
+  {name:"SkinIsTheCanvas (main)",short:"SkinIsCanvas",gasto:288.38,msgs:6,custoMsg:48.06,cpm:121.07,ctr:0.08,tsr:22.55,hver:0.80,v25:43,v50:19,v75:11,v95:9,impressoes:2382},
+  {name:"PastComesAlive (Museu)",short:"PastComesAlive",gasto:699.8,msgs:14,custoMsg:49.99,cpm:157.01,ctr:0.22,tsr:11.62,hver:0.99,v25:87,v50:44,v75:25,v95:20,impressoes:4457},
+  {name:"SkinIsCanvas (Museu)",short:"SkinCanvas Museu",gasto:135.01,msgs:1,custoMsg:135.01,cpm:114.03,ctr:0.42,tsr:12.0,hver:1.52,v25:24,v50:18,v75:10,v95:3,impressoes:1184},
+  {name:"PastComesAlive (Arte+Cultura)",short:"PastComesAlive A+C",gasto:161.26,msgs:1,custoMsg:161.26,cpm:117.37,ctr:0.22,tsr:22.05,hver:1.24,v25:37,v50:17,v75:13,v95:9,impressoes:1374},
+];
+const ads26=[
+  {name:"UnifiedInInk (EUA main)",short:"UnifiedInInk",gasto:840.87,msgs:36,custoMsg:23.36,cpm:72.02,ctr:0.61,tsr:23.88,hver:0.97,v25:270,v50:113,v75:67,v95:43,impressoes:11675},
+  {name:"AD02_ArtOfThePast (Ricos)",short:"ArtOfThePast",gasto:1653.92,msgs:41,custoMsg:40.34,cpm:83.20,ctr:0.49,tsr:22.51,hver:1.05,v25:537,v50:209,v75:121,v95:63,impressoes:19878},
+  {name:"PeopleInWorcester (Ricos)",short:"PeopleInWorcester",gasto:1002.39,msgs:41,custoMsg:24.45,cpm:78.20,ctr:0.60,tsr:31.46,hver:3.72,v25:927,v50:477,v75:201,v95:96,impressoes:12818},
+  {name:"Universe v04 (Ricos)",short:"Universe v04",gasto:449.56,msgs:21,custoMsg:21.41,cpm:86.80,ctr:0.42,tsr:33.25,hver:1.49,v25:143,v50:77,v75:37,v95:26,impressoes:5179},
+  {name:"AdornYourSkin (Normal–Cópia)",short:"AdornYourSkin",gasto:69.93,msgs:7,custoMsg:9.99,cpm:10.64,ctr:1.37,tsr:21.84,hver:1.63,v25:210,v50:107,v75:72,v95:58,impressoes:6575},
+  {name:"Trends&Taste v06 (Museu)",short:"Trends&Taste",gasto:312.23,msgs:13,custoMsg:24.02,cpm:113.09,ctr:0.65,tsr:29.41,hver:2.93,v25:132,v50:81,v75:48,v95:30,impressoes:2761},
+];
+
+function agg(data){
+  const totGasto=data.reduce((s,a)=>s+a.gasto,0);
+  const totMsgs=data.reduce((s,a)=>s+a.msgs,0);
+  const mc=data.filter(a=>a.msgs>0);
+  const avgCustoMsg=mc.reduce((s,a)=>s+a.custoMsg,0)/mc.length;
+  const avgCPM=data.reduce((s,a)=>s+a.cpm,0)/data.length;
+  const avgTSR=data.reduce((s,a)=>s+a.tsr,0)/data.length;
+  const avgHVER=data.reduce((s,a)=>s+a.hver,0)/data.length;
+  const avgV25=data.reduce((s,a)=>s+(a.v25/a.impressoes*100),0)/data.length;
+  const d75=data.filter(a=>a.v75>0);
+  const avgV75=d75.reduce((s,a)=>s+(a.v75/a.impressoes*100),0)/d75.length;
+  const d95=data.filter(a=>a.v95>0);
+  const avgV95=d95.reduce((s,a)=>s+(a.v95/a.impressoes*100),0)/d95.length;
+  return{totGasto,totMsgs,avgCustoMsg,avgCPM,avgTSR,avgHVER,avgV25,avgV75,avgV95};
+}
+const a25=agg(ads25),a26=agg(ads26);
+
+const kpis=[
+  {label:"Gasto total",v25:"R$"+a25.totGasto.toLocaleString('pt-BR',{minimumFractionDigits:2}),v26:"R$"+a26.totGasto.toLocaleString('pt-BR',{minimumFractionDigits:2}),diff:null},
+  {label:"Mensagens",v25:a25.totMsgs,v26:a26.totMsgs,diff:Math.round((a26.totMsgs/a25.totMsgs-1)*100)+"%",better:a26.totMsgs>a25.totMsgs},
+  {label:"Custo/Msg médio",v25:"R$"+a25.avgCustoMsg.toFixed(2),v26:"R$"+a26.avgCustoMsg.toFixed(2),diff:Math.round((a26.avgCustoMsg/a25.avgCustoMsg-1)*100)+"%",better:a26.avgCustoMsg<a25.avgCustoMsg},
+  {label:"CPM médio",v25:"R$"+a25.avgCPM.toFixed(2),v26:"R$"+a26.avgCPM.toFixed(2),diff:Math.round((a26.avgCPM/a25.avgCPM-1)*100)+"%",better:a26.avgCPM<a25.avgCPM},
+  {label:"Thumb Stop Ratio",v25:a25.avgTSR.toFixed(1)+"%",v26:a26.avgTSR.toFixed(1)+"%",diff:Math.round((a26.avgTSR/a25.avgTSR-1)*100)+"%",better:a26.avgTSR>a25.avgTSR},
+  {label:"Half-View Eng.",v25:a25.avgHVER.toFixed(2)+"%",v26:a26.avgHVER.toFixed(2)+"%",diff:Math.round((a26.avgHVER/a25.avgHVER-1)*100)+"%",better:a26.avgHVER>a25.avgHVER},
+];
+const krow=document.getElementById('krow-overview');
+kpis.forEach(k=>{
+  let dh='';
+  if(k.diff!==null){const cls=k.better?'up':'down';const ar=k.better?'↑':'↓';dh=`<span class="kdiff ${cls}">${ar}${k.diff}</span>`;}
+  krow.innerHTML+=`<div class="kcard"><div class="klabel">${k.label}</div><div class="kvals"><span class="kv25">${k.v25}</span><span class="kv26">${k.v26}</span>${dh}</div></div>`;
+});
+
+const all25=ads25.filter(a=>a.msgs>0).sort((a,b)=>a.custoMsg-b.custoMsg).slice(0,4);
+const all26=ads26.filter(a=>a.msgs>0).sort((a,b)=>a.custoMsg-b.custoMsg).slice(0,4);
+const maxCM=Math.max(...[...all25,...all26].map(a=>a.custoMsg));
+const cpmBars=document.getElementById('cpm-bars');
+all25.forEach(a=>{const p=(a.custoMsg/maxCM*100).toFixed(1);cpmBars.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}<span class="badge-y">2025</span></div><div class="bc-bars"><div class="bc-bar bc-v25" style="width:${p}%"></div></div><div class="bc-num">R$${a.custoMsg.toFixed(2)}</div></div>`;});
+all26.forEach(a=>{const p=(a.custoMsg/maxCM*100).toFixed(1);cpmBars.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}<span class="badge-y badge-26">2026</span></div><div class="bc-bars"><div class="bc-bar bc-v26" style="width:${p}%"></div></div><div class="bc-num">R$${a.custoMsg.toFixed(2)}</div></div>`;});
+
+const cpmP=document.getElementById('cpm-period-bars');
+const maxCPM=Math.max(...[...ads25,...ads26].map(a=>a.cpm));
+ads25.slice(0,4).forEach(a=>{const p=(a.cpm/maxCPM*100).toFixed(1);cpmP.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}</div><div class="bc-bars"><div class="bc-bar bc-v25" style="width:${p}%"></div></div><div class="bc-num">R$${a.cpm.toFixed(2)}</div></div>`;});
+ads26.slice(0,4).forEach(a=>{const p=(a.cpm/maxCPM*100).toFixed(1);cpmP.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}</div><div class="bc-bars"><div class="bc-bar bc-v26" style="width:${p}%"></div></div><div class="bc-num">R$${a.cpm.toFixed(2)}</div></div>`;});
+
+const fSteps=[
+  {label:"Impressões\n(base)",v25:100,v26:100},
+  {label:"25% vídeo",v25:a25.avgV25,v26:a26.avgV25},
+  {label:"75% vídeo",v25:a25.avgV75,v26:a26.avgV75},
+  {label:"95% vídeo",v25:a25.avgV95,v26:a26.avgV95},
+];
+const maxFH=120;
+const fEl=document.getElementById('funnel');
+fSteps.forEach(s=>{
+  const h25=Math.max(4,(s.v25/100)*maxFH);
+  const h26=Math.max(4,(s.v26/100)*maxFH);
+  fEl.innerHTML+=`<div class="fstep"><div class="fbar-wrap"><div class="fbar f25" style="height:${h25}px"></div><div class="fbar f26" style="height:${h26}px"></div></div><div class="flabel">${s.label.replace('\n','<br>')}</div><div class="fval" style="color:#5a6070">${s.v25.toFixed(1)}%</div><div class="fval" style="color:#8b98f0">${s.v26.toFixed(1)}%</div></div>`;
+});
+
+const tsrEl=document.getElementById('tsr-bars');
+const maxTSR=Math.max(...[...ads25,...ads26].map(a=>a.tsr));
+ads25.forEach(a=>{const p=(a.tsr/maxTSR*100).toFixed(1);tsrEl.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}</div><div class="bc-bars"><div class="bc-bar bc-v25" style="width:${p}%"></div></div><div class="bc-num">${a.tsr.toFixed(1)}%</div></div>`;});
+ads26.forEach(a=>{const p=(a.tsr/maxTSR*100).toFixed(1);tsrEl.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}</div><div class="bc-bars"><div class="bc-bar bc-v26" style="width:${p}%"></div></div><div class="bc-num">${a.tsr.toFixed(1)}%</div></div>`;});
+
+const hEl=document.getElementById('hver-bars');
+const maxHV=Math.max(...[...ads25,...ads26].map(a=>a.hver));
+ads25.forEach(a=>{const p=(a.hver/maxHV*100).toFixed(1);hEl.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}</div><div class="bc-bars"><div class="bc-bar bc-v25" style="width:${p}%"></div></div><div class="bc-num">${a.hver.toFixed(2)}</div></div>`;});
+ads26.forEach(a=>{const p=(a.hver/maxHV*100).toFixed(1);hEl.innerHTML+=`<div class="bc-row"><div class="bc-label">${a.short}</div><div class="bc-bars"><div class="bc-bar bc-v26" style="width:${p}%"></div></div><div class="bc-num">${a.hver.toFixed(2)}</div></div>`;});
+
+function renderAdList(data,elId){
+  const el=document.getElementById(elId);
+  [...data].sort((a,b)=>a.custoMsg-b.custoMsg||b.msgs-a.msgs).forEach(a=>{
+    el.innerHTML+=`<div class="ad-row"><div class="ad-name">${a.name}</div><div class="ad-metrics"><div class="am">Gasto <span>R$${a.gasto.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div><div class="am">Msgs <span>${a.msgs}</span></div><div class="am">Custo/Msg <span>${a.msgs>0?'R$'+a.custoMsg.toFixed(2):'—'}</span></div><div class="am">CPM <span>R$${a.cpm.toFixed(2)}</span></div><div class="am">CTR <span>${a.ctr.toFixed(2)}%</span></div><div class="am">TSR <span>${a.tsr.toFixed(1)}%</span></div><div class="am">HVER <span>${a.hver.toFixed(2)}</span></div></div></div>`;
+  });
+}
+renderAdList(ads25,'ads25-list');
+renderAdList(ads26,'ads26-list');
+
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
